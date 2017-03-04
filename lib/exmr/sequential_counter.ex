@@ -1,11 +1,5 @@
 defmodule SequentialCounter do
   def count_days_in_file(filename, global_acc) do
-    # Get the file from S3
-    # Stream it
-    # Process json on each line
-    # Extract days and put count somewhere
-    # Write the output
-
     filename
     |> File.stream!
     |> Stream.flat_map(fn(line) ->
