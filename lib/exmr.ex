@@ -1,6 +1,15 @@
 defmodule Exmr do
 
-  def process_file(filename) do
+  def count_events_per_day do
+    ["events/1.txt", "events/2.txt"]
+    |> Enum.reduce(%{}, fn(filename, acc) ->
+      flow_file(filename, acc)
+    end)
+  end
+
+
+
+  def process_file(filename, global_acc) do
     # Get the file from S3
     # Stream it
     # Process json on each line
@@ -14,12 +23,12 @@ defmodule Exmr do
       |> Poison.Parser.parse
       |> get_timestamps
     end)
-    |> Enum.reduce(%{}, fn(day, acc) ->
+    |> Enum.reduce(global_acc, fn(day, acc) ->
       Map.update(acc, day, 1, &(&1 + 1))
     end)
   end
 
-  def flow_file(filename) do
+  def flow_file(filename, global_acc) do
     filename
     |> File.stream!
     |> Flow.from_enumerable
@@ -28,7 +37,7 @@ defmodule Exmr do
       |> Poison.Parser.parse
       |> get_timestamps
     end)
-    |> Flow.reduce(fn -> %{} end, fn(day, acc) ->
+    |> Flow.reduce(fn -> global_acc end, fn(day, acc) ->
       Map.update(acc, day, 1, &(&1 + 1))
     end)
     |> Enum.into(%{})
