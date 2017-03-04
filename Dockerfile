@@ -1,4 +1,4 @@
-FROM registry.bleacherreport.com:5000/elixir1.3.4
+FROM registry.bleacherreport.com:5000/elixir1.4.0
 MAINTAINER Peter Hastie <phastie@bleacherreport.com>
 ADD . /app
 ENV MIX_ENV prod

@@ -1,5 +1,4 @@
 defmodule Exmr do
-  alias Experimental.Flow
 
   def process_file(filename) do
     # Get the file from S3
