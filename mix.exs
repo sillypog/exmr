@@ -19,7 +19,6 @@ defmodule Exmr.Mixfile do
   def application do
     [
       applications: [
-        :gen_stage,
         :logger,
         :poison
       ]
