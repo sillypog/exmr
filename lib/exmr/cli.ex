@@ -9,29 +9,32 @@ defmodule Exmr.CLI do
     {options, _, _} = OptionParser.parse(args,
       switches: [
         dir: :string,
+        mod: :string,
         run: :string
       ]
     )
     options
   end
 
-  defp process([dir: "events", run: "sequential"]) do
-    IO.inspect Exmr.sequential_count_events_per_day()
+  defp process([mod: mod, dir: "small"]) do
+    mod
+    |> expand_mod
+    |> Exmr.small
+    |> IO.inspect
   end
 
-  defp process([dir: "events", run: "parallel"]) do
-    IO.inspect Exmr.parallel_count_events_per_day()
-  end
-
-  defp process([dir: "large", run: "sequential"]) do
-    IO.inspect Exmr.large_sequential_count_events_per_day()
-  end
-
-  defp process([dir: "large", run: "parallel"]) do
-    IO.inspect Exmr.large_parallel_count_events_per_day()
+  defp process([mod: mod, dir: "large"]) do
+    mod
+    |> expand_mod
+    |> Exmr.large
+    |> IO.inspect
   end
 
   defp process(_) do
-    IO.puts "Unknown dir and run arguments"
+    IO.puts "Unknown mod and dir arguments"
+  end
+
+  defp expand_mod(module) do
+    String.capitalize(module) <> "Counter"
   end
 end
