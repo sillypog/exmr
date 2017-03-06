@@ -1,4 +1,4 @@
-defmodule ParallelCounter do
+defmodule Exmr.ParallelCounter do
   def count_days_in_file(filename, global_acc) do
     filename
     |> File.stream!
