@@ -13,4 +13,19 @@ defmodule Exmr.ParallelCounter do
     end)
     |> Enum.into(%{})
   end
+
+
+  def count_days_in_files(streams) do
+    streams
+    |> Flow.from_enumerables
+    |> Flow.flat_map(fn(line) ->
+      line
+      |> Poison.Parser.parse!
+      |> Exmr.Timestamp.get_timestamps_from_json
+    end)
+    |> Flow.reduce(fn -> %{} end, fn(day, acc) ->
+      Map.update(acc, day, 1, &(&1 + 1))
+    end)
+    |> Enum.into(%{})
+  end
 end

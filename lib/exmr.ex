@@ -24,4 +24,14 @@ defmodule Exmr do
       apply(module, :count_days_in_file, [filename, acc])
     end)
   end
+
+  def enumerables(run_module) do
+    module = Module.concat(Exmr, run_module)
+
+    streams = for file <- File.ls!("events/large") do
+      File.stream!("events/large/#{file}", read_ahead: 100_000)
+    end
+
+    apply(module, :count_days_in_files, [streams])
+  end
 end

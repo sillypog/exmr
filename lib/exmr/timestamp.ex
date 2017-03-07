@@ -10,7 +10,7 @@ defmodule Exmr.Timestamp do
     end)
   end
 
-  defp timestamp_to_day(timestamp) do
+  def timestamp_to_day(timestamp) do
     timestamp
     |> DateTime.from_unix!(:milliseconds)
     |> DateTime.to_date

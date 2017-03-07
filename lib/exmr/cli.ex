@@ -30,6 +30,13 @@ defmodule Exmr.CLI do
     |> IO.inspect
   end
 
+  defp process([mod: mod, dir: "enumerables"]) do
+    mod
+    |> expand_mod
+    |> Exmr.enumerables
+    |> IO.inspect
+  end
+
   defp process(_) do
     IO.puts "Unknown mod and dir arguments"
   end
