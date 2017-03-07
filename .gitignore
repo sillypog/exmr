@@ -18,6 +18,3 @@ erl_crash.dump
 
 # Ignore the very large mParticle event files
 events/large/
-
-# Ignore the escript
-exmr
