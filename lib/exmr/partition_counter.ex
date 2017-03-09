@@ -1,4 +1,4 @@
-defmodule Exmr.ParallelCounter do
+defmodule Exmr.PartitionCounter do
   def count_days_in_file(filename, global_acc) do
     filename
     |> File.stream!
@@ -19,6 +19,7 @@ defmodule Exmr.ParallelCounter do
       |> Poison.Parser.parse!
       |> Exmr.Timestamp.get_timestamps_from_json
     end)
+    |> Flow.partition #(stages: 1) # But the list just looks like ["2016-10-01", "2016-10-01", "2016-10-01", "2016-10-01", "2016-10-01", ...]
     |> Flow.reduce(fn -> final_acc end, fn(day, acc) ->
       Map.update(acc, day, 1, &(&1 + 1))
     end)

@@ -11,4 +11,8 @@ defmodule Exmr.SequentialCounter do
       Map.update(acc, day, 1, &(&1 + 1))
     end)
   end
+
+  def count_days_in_files(_) do
+    "`Stream.from_enumerables/1` does not exist"
+  end
 end
