@@ -10,3 +10,6 @@ The application can be run in Docker with:
 `docker build -t exmr .`
 `docker run --ti --rm -v $(pwd):/app exmr /bin/bash`
 
+The ruby directory contains scripts which also count the number of events per day, and is included for comparison. These scripts were designed to be used in streaming mode on Elastic Map Reduce. These require Ruby >= 2.1.x and can be run with:
+`cat events/large/*.txt | ruby ruby/mapper.rb | sort | ruby ruby/reducer.rb`
+
